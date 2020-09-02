@@ -109,6 +109,8 @@ function loadHTML(tracka, trackb){
 
     function htmlField(track,ab){
 
+        console.log(track);
+        
         // For some reason CSV from Spotify is inconsistent in using quotation marks around song name/artist
         // so just use data from API (.info) for consistency
         const html = 
@@ -126,6 +128,38 @@ function loadHTML(tracka, trackb){
 
     afield.insertAdjacentHTML('beforeend',htmlField(tracka,'tracka'));
     bfield.insertAdjacentHTML('beforeend',htmlField(trackb,'trackb'));
+
+    function getPreviews(track,ab){
+
+        const preview_url = track.info.preview_url;
+        if(preview_url==null){
+            return '';
+        }
+
+        const audioPreview = ab+"_preview";
+        console.log(audioPreview);
+        const html = 
+        `
+            <audio id=${audioPreview}>
+                <source src = ${preview_url} type="audio/mp3">
+            </audio>
+        `;
+
+        const img = document.getElementById(ab);
+        
+        img.addEventListener('mouseenter',function(){
+            playAudio(audioPreview);
+        });
+        img.addEventListener('mouseleave',function(){
+            pauseAudio(audioPreview);
+        });
+
+        return html;
+    }
+
+    afield.insertAdjacentHTML('beforeend',getPreviews(tracka,'tracka'));
+    bfield.insertAdjacentHTML('beforeend',getPreviews(trackb,'trackb'));
+
 
     document.getElementById('tracka').addEventListener("click",checkA);
     document.getElementById('trackb').addEventListener("click",checkB);

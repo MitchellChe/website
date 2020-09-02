@@ -58,7 +58,7 @@
                  <br><br>
                  I also had the chance to dip my toes into the realm of computer programming and sparked a strong interest in the field. So currently I'm focused
                  on developing applicable abilities and knowledge through <i>a lot</i> of patience and self-study and in the process, honing my accompanying problem-solving skills.
-                 You can see what I've been working on now at the page <a href="popsongs.html">here</a> or on <a href="https://github.com/MitchellChe">github</a>!
+                 You can see what I've been working on now at the page <a href="topsong.html">here</a> or on <a href="https://github.com/MitchellChe">github</a>!
                  <br><br>
                  Outside of that I enjoy learning languages (はじめまして！) and am interested in boardgames, basketball, and films! I also listen to music basically every waking hour (check out 'other').
                  Feel free to contact me if you have any recommendations or want to connect on any of these aforementioned or other things, I'm always open to new learning experiences! :)
@@ -92,8 +92,8 @@
             <div id='music-port'>
                 <p id = 'music-status'></p>
                 <br>
-                <span id='music-detail'>
-                </span> 
+                <div id='music-detail'>
+                </div> 
             </div>
 
         </div>
@@ -107,6 +107,16 @@
         </div>
     </div>
 
-    <
+    <script>
+        function playAudio() { 
+            var x = document.getElementById("track_preview")
+            x.volume=0.5;
+            x.play(); 
+        } 
+        function pauseAudio() { 
+            var x = document.getElementById("track_preview")
+            x.pause(); 
+        }
+    </script>
 </body>
 </html>

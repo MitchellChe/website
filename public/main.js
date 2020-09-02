@@ -62,7 +62,8 @@ async function loadSong(){
         const title = currentSong.item.name;
         const artist = currentSong.item.artists[0].name;
         const url = currentSong.item.external_urls.spotify;
-        createTrackDetail(img,title,artist,url);
+        const preview = currentSong.item.preview_url;
+        createTrackDetail(img,title,artist,url,preview);
         localStorage.setItem('currentlyPlaying',currentSong.item.id);
     }
     else{
@@ -74,33 +75,60 @@ async function loadSong(){
         const artist = recentlyPlayed.items[0].track.artists[0].name;
         const lastListenedTime = new Date(recentlyPlayed.items[0].played_at);
         const url = recentlyPlayed.items[0].track.external_urls.spotify;
-        createTrackDetail(img,title,artist,url,lastListenedTime.toLocaleString());
+        const preview = currentSong.item.preview_url;
+        createTrackDetail(img,title,artist,url,preview,lastListenedTime.toLocaleString());
 
     }
 
-    function createTrackDetail(img, title, artist, url, time='') {
+    function createTrackDetail(img, title, artist, url, preview, time='') {
 
         const detailField = document.getElementById('music-detail');
         detailField.innerHTML = '';
-    
-        const html = 
-        `
-        <div>
-        <a href=${url} target="_blank">
-        <img src="${img}" class="album_art" alt="album cover">
-        </a>    
-        </div>
-        <div class="">
-        <label for="title">${title}</label>
-        </div>
-        <div>
-        <label for="artist">${artist}</label>
-        </div> 
-        <div>
-        <label for="time">${time}</label>
-        </div>
-        `;
-        detailField.insertAdjacentHTML('beforeend', html);
+        console.log(preview);
+
+        if(preview!=null){
+            const html = 
+            `
+            <div>
+            <audio id="track_preview">
+                <source src = ${preview} type="audio/mp3">
+            </audio>
+            <a href=${url} target="_blank">
+            <img src="${img}" class="album_art" alt="album cover" onmouseover="playAudio()" onmouseout="pauseAudio()">
+            </a>    
+            </div>
+            <div class="">
+            <label for="title">${title}</label>
+            </div>
+            <div>
+            <label for="artist">${artist}</label>
+            </div> 
+            <div>
+            <label for="time">${time}</label>
+            </div>
+            `;
+            detailField.insertAdjacentHTML('beforeend', html);
+        }
+        else{
+            const html =
+            `
+            <div>
+            <a href=${url} target="_blank">
+            <img src="${img}" class="album_art" alt="album cover">
+            </a>    
+            </div>
+            <div class="">
+            <label for="title">${title}</label>
+            </div>
+            <div>
+            <label for="artist">${artist}</label>
+            </div> 
+            <div>
+            <label for="time">${time}</label>
+            </div>
+            `;
+        }
+
     }
 }
 

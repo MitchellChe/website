@@ -35,7 +35,6 @@ async function getMySongData(){
     catch(error){
         (async function(){
             authToken = await refreshAuthToken();
-            getMySongData();
         })();
     }
 
@@ -46,6 +45,10 @@ async function getCurrentSong(token){
     const result = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
         method: 'GET',
         headers: {'Authorization' : 'Bearer '+token}
+    }).catch(async function(error){
+        authToken = await refreshAuthToken();
+        console.log(error);
+        getCurrentSong(authToken);
     });
     const data = await result.json();
     return data;
@@ -56,8 +59,10 @@ async function getRecentlyPlayed(token){
     const result = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
         method: 'GET',
         headers: {'Authorization' : 'Bearer '+token}
-    }).catch(function(error){
+    }).catch(async function(error){
+        authToken = await refreshAuthToken();
         console.log(error);
+        getCurrentSong(authToken);
     });
     const data = await result.json();
     return data;
