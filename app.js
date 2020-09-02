@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const fetch = require('node-fetch');
+const { response } = require('express');
 require('dotenv').config();
 
 const port = process.env.PORT || 3000;
@@ -30,12 +31,9 @@ async function getMySongData(){
         currentSong = await getCurrentSong(authToken);
         recentlyPlayed = await getRecentlyPlayed(authToken);
         return {currentSong,recentlyPlayed};
-        
     }
     catch(error){
-        (async function(){
-            authToken = await refreshAuthToken();
-        })();
+        console.log(error);
     }
 
 }
@@ -45,13 +43,19 @@ async function getCurrentSong(token){
     const result = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
         method: 'GET',
         headers: {'Authorization' : 'Bearer '+token}
-    }).catch(async function(error){
-        authToken = await refreshAuthToken();
-        console.log(error);
-        getCurrentSong(authToken);
     });
+
     const data = await result.json();
-    return data;
+    if(!result.ok&&result.status==401){
+        authToken = await refreshAuthToken();
+        getCurrentSong(authToken);
+    }
+    else if(!result.ok){
+        throw new Error(result.status)
+    }
+    else{
+        return data;
+    }
 }
 
 async function getRecentlyPlayed(token){
@@ -59,13 +63,18 @@ async function getRecentlyPlayed(token){
     const result = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
         method: 'GET',
         headers: {'Authorization' : 'Bearer '+token}
-    }).catch(async function(error){
-        authToken = await refreshAuthToken();
-        console.log(error);
-        getCurrentSong(authToken);
     });
     const data = await result.json();
-    return data;
+    if(!result.ok&&result.status==401){
+        authToken = await refreshAuthToken();
+        getRecentlyPlayed(authToken);
+    }
+    else if(!result.ok){
+        throw new Error(result.status)
+    }
+    else{
+        return data;
+    }
 }
 
 async function refreshAuthToken(){
@@ -129,19 +138,22 @@ app.post('/spotifyAPI/tracks', async (request, response)=>{
 
 async function fetchSpotifyTracks(ids){
 
-    try{
-        const result = await fetch(`https://api.spotify.com/v1/tracks/?ids=${ids}`, {
-            method: 'GET',
-            headers: {'Authorization' : 'Bearer '+ccToken}
-        });
-        const data = await result.json();
+
+    const result = await fetch(`https://api.spotify.com/v1/tracks/?ids=${ids}`, {
+        method: 'GET',
+        headers: {'Authorization' : 'Bearer '+ccToken}
+    });
+    const data = await result.json();
+    if(!result.ok&&result.status==401){
+        ccToken = await getCCToken();
+        fetchSpotifyTracks(ids);
+    }
+    else if(!result.ok){
+        throw new Error(result.status)
+    }
+    else{
         return data;
     }
-    catch(error){
-        ccToken = getCCToken();
-        console.log(error);
-    }
-
 
 }
 

@@ -82,6 +82,7 @@ function loadGame(){
     (async function getTrackInfo(){
     
         const data = await getTwoTracks(tracka,trackb);
+        console.log(data);
         tracka.info = data.tracks[0];
         trackb.info = data.tracks[1];
         
