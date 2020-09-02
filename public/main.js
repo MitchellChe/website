@@ -122,6 +122,7 @@ async function loadSong(){
             <label for="time">${time}</label>
             </div>
             `;
+            detailField.insertAdjacentHTML('beforeend', html);
         }
 
     }
