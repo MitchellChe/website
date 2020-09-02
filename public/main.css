@@ -1,0 +1,143 @@
+body{
+    background-color: #dee5ff;
+    height: 100%;
+    display: block
+}
+h1{
+    font-family: "Noticia Text",serif;
+    font-size: 2.5em;
+    color: #151517;
+    font-weight: bold;
+    margin: 0 0 0.1em 0;
+}
+h2{
+    font-family: "Ubuntu Mono", monospace;
+    font-size: .9em;
+    color: #3d3d42;
+    letter-spacing: 0.15em;
+    margin: 0 0 0.5em 0;
+}
+
+p{
+    text-align: justify;
+    font-family: "Noticia Text",sans-serif;
+}
+
+#biohead{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: wrap;
+    justify-content: space-between;
+}
+#bio-container{
+    display:block;
+    margin:1.5em auto;
+    width: 50%;
+    max-width: 600px;
+    padding: 2%;
+    position: relative;
+}
+
+#ppic{
+    height: auto;
+    width: auto;
+    max-width: 230px;
+    max-height: 230px;
+    border-radius: 50%;
+}
+
+.links{
+    text-align: center;
+}
+
+.biobox{
+    margin: 25px 0;
+}
+
+.buttons{
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #dee5ff;
+    margin: 30px 0;
+}
+
+.buttons button{
+    width: 80px;
+    height: 25px;
+    font-family: "Ubuntu Mono";
+    border: 1.25px solid gray;
+    border-radius: 10px;
+    background-color: #dee5ff;
+    outline:none;
+}
+.buttons button:hover{
+    background-color: #aab8eb;
+}
+
+.buttons .show{
+    border-color: black;
+    font-weight: bold;
+}
+
+#footer{
+    position: absolute;
+    display: block;
+    left:0;
+    right:0;
+    text-align: center;
+    bottom: 0;
+    margin:2em auto;
+}
+
+.links{
+    font-family: monospace;
+}
+
+.links a{
+    color:black;
+}
+.links a:hover{
+    font-weight: bold;
+}
+.bio{
+    display: none;
+}
+.bio.show{
+    display: block;
+}
+
+.socials{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.socialIcon{
+    height: 50px;
+    width: 50px;
+}
+
+p.center{
+    text-align: center;
+}
+
+.socials a:hover{
+    transform: scale(1.1);
+}
+
+.bio a{
+    color:black;
+}
+
+.bio a:hover{
+    color:grey;
+}
+
+#music-port{
+    text-align: center;
+}
