@@ -75,7 +75,7 @@ async function loadSong(){
         const artist = recentlyPlayed.items[0].track.artists[0].name;
         const lastListenedTime = new Date(recentlyPlayed.items[0].played_at);
         const url = recentlyPlayed.items[0].track.external_urls.spotify;
-        const preview = currentSong.item.preview_url;
+        const preview = recentlyPlayed.items[0].track.preview_url;
         createTrackDetail(img,title,artist,url,preview,lastListenedTime.toLocaleString());
 
     }
