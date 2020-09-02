@@ -53,10 +53,6 @@ async function loadSong(){
 
     if(currentSong.is_playing){
 
-        const currentlyPlaying = localStorage.getItem('currentlyPlaying');
-
-        if(currentlyPlaying!=''&&currentlyPlaying==currentSong.item.id){return;}
-
         document.getElementById('music-status').innerHTML="here's what I'm listening to in real time! refreshes every 30s or on page reload using spotify's API";
         const img = currentSong.item.album.images[2].url;
         const title = currentSong.item.name;
@@ -64,7 +60,6 @@ async function loadSong(){
         const url = currentSong.item.external_urls.spotify;
         const preview = currentSong.item.preview_url;
         createTrackDetail(img,title,artist,url,preview);
-        localStorage.setItem('currentlyPlaying',currentSong.item.id);
     }
     else{
         
@@ -133,6 +128,5 @@ async function loadSong(){
 }
 
 loadSong();
-localStorage.setItem('currentlyPlaying','');
 
 setInterval(loadSong,30000);
