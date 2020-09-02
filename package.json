@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Personal website for Mitchell Che",
   "main": "app.js",
+  "start":"node app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,4 +17,5 @@
     "express": "^4.17.1",
     "node-fetch": "^2.6.0"
   }
+  
 }
