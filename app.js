@@ -130,9 +130,15 @@ app.post('/spotifyAPI/tracks', async (request, response)=>{
     console.log('Fetch Request Made');
     const ids = request.body.ids;
 
-    const data = await fetchSpotifyTracks(ids);
-
-    response.json(data);
+    try{
+        const data = await fetchSpotifyTracks(ids);
+        response.json(data);
+    }
+    catch(error){
+        console.log(error);
+        response.json({error:'error in request'});
+    }
+    
     
 });
 
@@ -149,7 +155,7 @@ async function fetchSpotifyTracks(ids){
         fetchSpotifyTracks(ids);
     }
     else if(!result.ok){
-        throw new Error(result.status)
+        throw new Error(result)
     }
     else{
         return data;
