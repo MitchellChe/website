@@ -44,12 +44,14 @@ function fadeIn() {
 async function loadSong(){
 
     const response = await fetch('/api/song');
-    const songData = await response.json();
+    const songData = await response.json().catch(function(error){
+        console.log(error);
+    });
 
     const currentSong = songData.currentSong;
     const recentlyPlayed = songData.recentlyPlayed;
 
-    console.log(currentSong);
+    console.log(songData);
 
     if(currentSong.is_playing){
 
