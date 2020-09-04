@@ -31,6 +31,7 @@ async function getMySongData(){
 
     try{
         currentSong = await getCurrentSong(authToken);
+        recentlyPlayed = await getRecentlyPlayed(authToken);
     }
 
     //Fetching current song gives below error after I don't listen to something for a while-need to find permanent fix for error but this works for now
@@ -51,9 +52,6 @@ async function getCurrentSong(token){
         headers: {'Authorization' : 'Bearer '+token}
     });
 
-    const data = await result.json();
-    console.log(data);
-
     if(!result.ok&&result.status==401){
         authToken = await refreshAuthToken();
         getCurrentSong(authToken);
@@ -64,6 +62,7 @@ async function getCurrentSong(token){
         throw new Error(result.status);
     }
     else{
+        const data = await result.json();
         return data;
     }
 }
