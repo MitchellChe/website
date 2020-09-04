@@ -45,7 +45,8 @@ async function loadSong(){
 
     const response = await fetch('/api/song');
     const songData = await response.json().catch(function(error){
-        console.log(error);
+        console.log(error)
+        console.log("error caught");
     });
 
     const currentSong = songData.currentSong;
@@ -53,7 +54,7 @@ async function loadSong(){
 
     console.log(songData);
 
-    if(currentSong.is_playing){
+    if(!currentSong&&currentSong.is_playing){
 
         document.getElementById('music-status').innerHTML="here's what I'm listening to in real time! refreshes every 30s or on page reload using spotify's API";
         const img = currentSong.item.album.images[2].url;

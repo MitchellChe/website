@@ -24,17 +24,23 @@ const secret = process.env.CLIENT_SECRET;
 var refreshToken = process.env.REFRESH_TOKEN;
 var authToken = '';
 var ccToken = '';
+var currentSong = '';
+var recentlyPlayed = '';
 
 async function getMySongData(){
 
     try{
         currentSong = await getCurrentSong(authToken);
-        recentlyPlayed = await getRecentlyPlayed(authToken);
-        return {currentSong,recentlyPlayed};
     }
+
+    //Fetching current song gives below error after I don't listen to something for a while-need to find permanent fix for error but this works for now
+    //FetchError: invalid json response body at https://api.spotify.com/v1/me/player/currently-playing reason: Unexpected end of JSON input
     catch(error){
+        currentSong = '';
+        recentlyPlayed = await getRecentlyPlayed(authToken);
         console.log(error);
     }
+    return {currentSong,recentlyPlayed};
 
 }
 
@@ -46,12 +52,16 @@ async function getCurrentSong(token){
     });
 
     const data = await result.json();
+    console.log(data);
+
     if(!result.ok&&result.status==401){
         authToken = await refreshAuthToken();
         getCurrentSong(authToken);
     }
     else if(!result.ok){
-        throw new Error(result.status)
+        console.log(result);
+        console.log('hello');
+        throw new Error(result.status);
     }
     else{
         return data;
