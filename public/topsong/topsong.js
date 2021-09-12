@@ -4,7 +4,7 @@ initGame();
 
 async function getCharts(){
 
-    const proxyurl = 'https://cors-anywhere.herokuapp.com/';                   //CORS Proxy
+    const proxyurl = 'https://cors-proxy.htmldriven.com/';                   //CORS Proxy
     const url = 'https://spotifycharts.com/regional/us/daily/latest/download'; //Daily US top 200 from spotifycharts.com
     const response = await fetch(proxyurl+url);    
     const data = await response.text();
